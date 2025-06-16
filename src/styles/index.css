@@ -1,0 +1,582 @@
+/* Global Styles */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  height: 100%;
+  background-color: #f5f5f5;
+}
+
+#root {
+  height: 100%;
+  min-height: 100vh;
+}
+
+.App {
+  height: 100%;
+  min-height: 100vh;
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Loading animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Custom utility classes */
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.slide-in-up {
+  animation: slideInUp 0.4s ease-out;
+}
+
+.pulse {
+  animation: pulse 2s infinite;
+}
+
+.spinning {
+  animation: spin 1s linear infinite;
+}
+
+/* Page layout classes */
+.page-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f5f5f5;
+}
+
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #FF5722 0%, #FF8A65 100%);
+  padding: 20px;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Card styles */
+.custom-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.3s ease;
+}
+
+.custom-card:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+.auth-card {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 400px;
+  animation: slideInUp 0.5s ease-out;
+}
+
+/* Button styles */
+.primary-button {
+  background: linear-gradient(135deg, #FF5722, #FF8A65);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 28px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(255, 87, 34, 0.3);
+}
+
+.primary-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 87, 34, 0.4);
+}
+
+.secondary-button {
+  background: transparent;
+  color: #FF5722;
+  border: 2px solid #FF5722;
+  border-radius: 12px;
+  padding: 12px 26px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.secondary-button:hover {
+  background: #FF5722;
+  color: white;
+}
+
+/* Form styles */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #333;
+}
+
+.form-input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+  background: white;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #FF5722;
+  box-shadow: 0 0 0 3px rgba(255, 87, 34, 0.1);
+}
+
+.form-error {
+  color: #f44336;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+/* Status badges */
+.status-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-pending {
+  background: #fff3e0;
+  color: #f57c00;
+}
+
+.status-accepted {
+  background: #e8f5e8;
+  color: #2e7d32;
+}
+
+.status-in-progress {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.status-completed {
+  background: #e8f5e8;
+  color: #2e7d32;
+}
+
+.status-cancelled {
+  background: #ffebee;
+  color: #d32f2f;
+}
+
+/* Map container */
+.map-container {
+  width: 100%;
+  height: 400px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.full-map {
+  height: 100vh;
+}
+
+/* Navigation styles */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  border-top: 1px solid #e0e0e0;
+  padding: 10px 0;
+  z-index: 1000;
+}
+
+/* Emergency button */
+.emergency-button {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #f44336;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(244, 67, 54, 0.4);
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.emergency-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(244, 67, 54, 0.6);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .auth-card {
+    padding: 30px 20px;
+    margin: 20px;
+  }
+  
+  .page-container {
+    padding: 0;
+  }
+  
+  .map-container {
+    height: 300px;
+  }
+  
+  .emergency-button {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    top: 15px;
+    right: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 25px 15px;
+  }
+  
+  .primary-button,
+  .secondary-button {
+    width: 100%;
+    padding: 16px;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #121212;
+    color: #ffffff;
+  }
+  
+  .custom-card {
+    background: #1e1e1e;
+    color: #ffffff;
+  }
+  
+  .form-input {
+    background: #2c2c2c;
+    border-color: #444;
+    color: #ffffff;
+  }
+  
+  .form-input:focus {
+    border-color: #FF5722;
+  }
+}
+
+/* Enhanced Dark Theme Global Styles */
+body.dark-theme {
+  background-color: #121212 !important;
+  color: #ffffff !important;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.light-theme {
+  background-color: #f8f9fa !important;
+  color: #212529 !important;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dark theme root element */
+body.dark-theme #root {
+  background-color: #121212;
+  min-height: 100vh;
+}
+
+/* Dark theme for main containers */
+body.dark-theme .MuiContainer-root {
+  background-color: transparent;
+}
+
+/* Enhanced dark theme for cards */
+body.dark-theme .MuiCard-root {
+  background-color: #1e1e1e !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+body.dark-theme .MuiCardContent-root {
+  color: #ffffff !important;
+}
+
+/* Dark theme for typography */
+body.dark-theme .MuiTypography-root {
+  color: inherit !important;
+}
+
+body.dark-theme .MuiTypography-colorTextSecondary {
+  color: #b0b0b0 !important;
+}
+
+/* Dark theme for app bar */
+body.dark-theme .MuiAppBar-root {
+  background-color: #1e1e1e !important;
+  color: #ffffff !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Dark theme for paper elements */
+body.dark-theme .MuiPaper-root {
+  background-color: #1e1e1e !important;
+  color: #ffffff !important;
+}
+
+/* Dark theme for buttons */
+body.dark-theme .MuiButton-outlined {
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  color: #ffffff !important;
+}
+
+body.dark-theme .MuiButton-outlined:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Dark theme for inputs */
+body.dark-theme .MuiTextField-root .MuiOutlinedInput-root {
+  background-color: #2e2e2e !important;
+  color: #ffffff !important;
+}
+
+body.dark-theme .MuiTextField-root .MuiOutlinedInput-notchedOutline {
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+body.dark-theme .MuiTextField-root .MuiInputLabel-root {
+  color: #b0b0b0 !important;
+}
+
+/* Dark theme for alerts */
+body.dark-theme .MuiAlert-root {
+  background-color: #2e2e2e !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Dark theme for bottom navigation */
+body.dark-theme .MuiBottomNavigation-root {
+  background-color: #1e1e1e !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+body.dark-theme .MuiBottomNavigationAction-root {
+  color: #b0b0b0 !important;
+}
+
+body.dark-theme .MuiBottomNavigationAction-root.Mui-selected {
+  color: #FF5722 !important;
+}
+
+/* Dark theme for menu */
+body.dark-theme .MuiMenu-paper {
+  background-color: #2e2e2e !important;
+  color: #ffffff !important;
+}
+
+body.dark-theme .MuiMenuItem-root {
+  color: #ffffff !important;
+}
+
+body.dark-theme .MuiMenuItem-root:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Dark theme for drawers */
+body.dark-theme .MuiDrawer-paper {
+  background-color: #1e1e1e !important;
+  color: #ffffff !important;
+}
+
+body.dark-theme .MuiListItem-root {
+  color: #ffffff !important;
+}
+
+body.dark-theme .MuiListItemText-primary {
+  color: #ffffff !important;
+}
+
+body.dark-theme .MuiListItemText-secondary {
+  color: #b0b0b0 !important;
+}
+
+/* Dark theme for tabs */
+body.dark-theme .MuiTabs-root {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+body.dark-theme .MuiTab-root {
+  color: #b0b0b0 !important;
+}
+
+body.dark-theme .MuiTab-root.Mui-selected {
+  color: #FF5722 !important;
+}
+
+/* Dark theme scrollbar */
+body.dark-theme ::-webkit-scrollbar {
+  width: 8px;
+  background-color: #1e1e1e;
+}
+
+body.dark-theme ::-webkit-scrollbar-track {
+  background: #2e2e2e;
+  border-radius: 4px;
+}
+
+body.dark-theme ::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 4px;
+}
+
+body.dark-theme ::-webkit-scrollbar-thumb:hover {
+  background: #777;
+}
+
+/* Dark theme selection */
+body.dark-theme ::selection {
+  background: rgba(255, 87, 34, 0.3);
+  color: #ffffff;
+}
+
+/* Dark theme for specific components */
+body.dark-theme .MuiChip-root {
+  background-color: #2e2e2e !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+body.dark-theme .MuiChip-colorPrimary {
+  background-color: #FF5722 !important;
+  color: #ffffff !important;
+}
+
+/* Dark theme for dialog */
+body.dark-theme .MuiDialog-paper {
+  background-color: #1e1e1e !important;
+  color: #ffffff !important;
+}
+
+/* Ensure proper background for main content areas */
+body.dark-theme .main-content {
+  background-color: #121212;
+  min-height: 100vh;
+}
+
+/* Fix for any remaining light backgrounds */
+body.dark-theme * {
+  box-shadow: none !important;
+}
+
+body.dark-theme .MuiCard-root {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Print styles */
+@media print {
+  .emergency-button,
+  .bottom-nav {
+    display: none;
+  }
+}
+
+/* Focus visible for accessibility */
+.focus-visible {
+  outline: 2px solid #FF5722;
+  outline-offset: 2px;
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .primary-button {
+    background: #000;
+    border: 2px solid #fff;
+  }
+  
+  .secondary-button {
+    border-width: 3px;
+  }
+}

@@ -1,0 +1,227 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  phone     String?
+  role      Role     @default(PASSENGER)
+  gender    Gender?
+  
+  // Profile data
+  profileImage String?
+  dateOfBirth  DateTime?
+  address      String?
+  
+  // Preferences
+  genderPreference Gender?
+  biometricEnabled Boolean @default(false)
+  
+  // Relationships
+  ridesAsRider  Ride[] @relation("RiderRides")
+  ridesAsDriver Ride[] @relation("DriverRides")
+  vehicle       Vehicle?
+  ratingsGiven  RideRating[] @relation("RaterRatings")
+  ratingsReceived RideRating[] @relation("RatedUserRatings")
+  emergencyReports EmergencyReport[]
+  messagesSent  Message[] @relation("SenderMessages")
+  messagesReceived Message[] @relation("ReceiverMessages")
+  
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("users")
+}
+
+model Vehicle {
+  id           String @id @default(cuid())
+  driverId     String @unique
+  make         String
+  model        String
+  year         Int
+  plateNumber  String @unique
+  color        String
+  vehicleType  VehicleType @default(SEDAN)
+  
+  // Vehicle verification
+  isVerified   Boolean @default(false)
+  
+  // Relationships
+  driver       User @relation(fields: [driverId], references: [id], onDelete: Cascade)
+  
+  // Timestamps
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  
+  @@map("vehicles")
+}
+
+model Ride {
+  id              String     @id @default(cuid())
+  riderId         String
+  driverId        String?
+  
+  // Location data
+  pickupLatitude  Float
+  pickupLongitude Float
+  pickupAddress   String
+  dropLatitude    Float
+  dropLongitude   Float
+  dropAddress     String
+  
+  // Ride details
+  status          RideStatus @default(PENDING)
+  estimatedPrice  Float?
+  actualPrice     Float?
+  distance        Float?
+  duration        Int?       // in minutes
+  
+  // Timestamps
+  requestedAt     DateTime   @default(now())
+  acceptedAt      DateTime?
+  startedAt       DateTime?
+  completedAt     DateTime?
+  cancelledAt     DateTime?
+  
+  // Relationships
+  rider           User @relation("RiderRides", fields: [riderId], references: [id])
+  driver          User? @relation("DriverRides", fields: [driverId], references: [id])
+  rating          RideRating?
+  emergencyReports EmergencyReport[]
+  messages        Message[]
+  
+  @@map("rides")
+}
+
+model RideRating {
+  id         String @id @default(cuid())
+  rideId     String @unique
+  raterId    String
+  ratedUserId String
+  rating     Int    // 1-5 stars
+  review     String?
+  
+  // Relationships
+  ride       Ride @relation(fields: [rideId], references: [id], onDelete: Cascade)
+  rater      User @relation("RaterRatings", fields: [raterId], references: [id])
+  ratedUser  User @relation("RatedUserRatings", fields: [ratedUserId], references: [id])
+  
+  // Timestamps
+  createdAt  DateTime @default(now())
+  
+  @@map("ride_ratings")
+}
+
+model EmergencyReport {
+  id          String @id @default(cuid())
+  rideId      String
+  reporterId  String
+  
+  // Emergency details
+  emergencyType EmergencyType
+  description   String?
+  latitude      Float?
+  longitude     Float?
+  
+  // Status
+  status        EmergencyStatus @default(ACTIVE)
+  resolvedAt    DateTime?
+  
+  // Relationships
+  ride          Ride @relation(fields: [rideId], references: [id])
+  reporter      User @relation(fields: [reporterId], references: [id])
+  
+  // Timestamps
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  @@map("emergency_reports")
+}
+
+model Message {
+  id         String @id @default(cuid())
+  rideId     String
+  senderId   String
+  receiverId String
+  content    String
+  messageType MessageType @default(TEXT)
+  
+  // Message status
+  isRead     Boolean @default(false)
+  readAt     DateTime?
+  
+  // Relationships
+  ride       Ride @relation(fields: [rideId], references: [id], onDelete: Cascade)
+  sender     User @relation("SenderMessages", fields: [senderId], references: [id])
+  receiver   User @relation("ReceiverMessages", fields: [receiverId], references: [id])
+  
+  // Timestamps
+  createdAt  DateTime @default(now())
+  
+  @@map("messages")
+}
+
+// Enums
+enum Role {
+  PASSENGER
+  DRIVER
+  ADMIN
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum VehicleType {
+  SEDAN
+  SUV
+  HATCHBACK
+  BIKE
+  AUTO
+}
+
+enum RideStatus {
+  PENDING
+  ACCEPTED
+  EN_ROUTE
+  PICKED_UP
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum EmergencyType {
+  ACCIDENT
+  UNSAFE_DRIVER
+  ROUTE_DEVIATION
+  HARASSMENT
+  VEHICLE_BREAKDOWN
+  OTHER
+}
+
+enum EmergencyStatus {
+  ACTIVE
+  RESOLVED
+  ESCALATED
+}
+
+enum MessageType {
+  TEXT
+  LOCATION
+  CALL_REQUEST
+  SYSTEM
+} 

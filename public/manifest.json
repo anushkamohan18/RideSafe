@@ -1,0 +1,68 @@
+{
+  "short_name": "RideSafe",
+  "name": "RideSafe - Safe Ride Sharing",
+  "description": "Safe and reliable ride sharing for everyone",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "logo192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "maskable-icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable"
+    },
+    {
+      "src": "maskable-icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#FF5722",
+  "background_color": "#ffffff",
+  "categories": ["travel", "transport", "lifestyle"],
+  "lang": "en-US",
+  "scope": "/",
+  "shortcuts": [
+    {
+      "name": "Book a Ride",
+      "short_name": "Book Ride",
+      "description": "Quickly book a new ride",
+      "url": "/book",
+      "icons": [
+        {
+          "src": "logo192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Driver Dashboard",
+      "short_name": "Drive",
+      "description": "Access driver dashboard",
+      "url": "/driver",
+      "icons": [
+        {
+          "src": "logo192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+} 

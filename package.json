@@ -1,0 +1,79 @@
+{
+  "name": "ridesafe-web",
+  "version": "1.0.0",
+  "description": "RideSafe - Web-based ride sharing application",
+  "private": true,
+  "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/icons-material": "^5.11.9",
+    "@mui/material": "^5.11.10",
+    "axios": "^1.3.4",
+    "date-fns": "^2.29.3",
+    "jwt-decode": "^3.1.2",
+    "leaflet": "^1.9.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.43.5",
+    "react-hot-toast": "^2.4.0",
+    "react-leaflet": "^4.2.1",
+    "react-router-dom": "^6.8.1",
+    "react-scripts": "5.0.1",
+    "socket.io-client": "^4.6.1",
+    "web-vitals": "^3.1.1",
+    "workbox-webpack-plugin": "^6.5.4"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "concurrently": "^9.1.2",
+    "eslint": "^8.36.0",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0"
+  },
+  "scripts": {
+    "start": "concurrently \"npm run backend:dev\" \"npm run frontend:start\" --names \"BACKEND,FRONTEND\" --prefix-colors \"bgBlue.bold,bgMagenta.bold\"",
+    "dev": "concurrently \"npm run backend:dev\" \"npm run frontend:start\" --names \"BACKEND,FRONTEND\" --prefix-colors \"bgBlue.bold,bgMagenta.bold\"",
+    "start:production": "concurrently \"npm run backend:start\" \"npm run frontend:start\" --names \"BACKEND,FRONTEND\" --prefix-colors \"bgBlue.bold,bgMagenta.bold\"",
+    "frontend:start": "react-scripts start",
+    "frontend:build": "react-scripts build",
+    "frontend:build:production": "REACT_APP_ENV=production npm run build",
+    "frontend:test": "react-scripts test",
+    "frontend:eject": "react-scripts eject",
+    "frontend:lint": "eslint src --ext .js,.jsx",
+    "frontend:lint:fix": "eslint src --ext .js,.jsx --fix",
+    "frontend:serve": "npx serve -s build -l 3000",
+    "backend:start": "cd backend && npm start",
+    "backend:dev": "cd backend && npm run dev",
+    "backend:setup-db": "cd backend && npm run setup-db",
+    "backend:migrate": "cd backend && npm run migrate",
+    "backend:seed": "cd backend && npm run seed",
+    "backend:test": "cd backend && npm test",
+    "backend:lint": "cd backend && npm run lint",
+    "build": "npm run frontend:build",
+    "build:production": "npm run frontend:build:production",
+    "test": "concurrently \"npm run backend:test\" \"npm run frontend:test\"",
+    "lint": "concurrently \"npm run backend:lint\" \"npm run frontend:lint\"",
+    "lint:fix": "npm run frontend:lint:fix",
+    "setup": "npm install && cd backend && npm install",
+    "seed": "npm run backend:seed"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
